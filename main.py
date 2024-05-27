@@ -5,7 +5,7 @@ from cnnClassifier.pipeline.stage_01_data_ingestion import DataIngestionTraining
 #from cnnClassifier.pipeline.stage_04_evaluation import EvaluationPipeline
 
 
-'''STAGE_NAME = "Data Ingestion stage"
+STAGE_NAME = "Data Ingestion stage"
 try:
    logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<") 
    data_ingestion = DataIngestionTrainingPipeline()
@@ -18,7 +18,7 @@ except Exception as e:
 
 
 
-STAGE_NAME = "Prepare base model"
+'''STAGE_NAME = "Prepare base model"
 try: 
    logger.info(f"*******************")
    logger.info(f">>>>>> stage {STAGE_NAME} started <<<<<<")
