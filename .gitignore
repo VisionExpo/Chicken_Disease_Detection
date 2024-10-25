@@ -160,5 +160,4 @@ cython_debug/
 #.idea/
 
 # Dataset
-artifacts/data_ingestion/poultry_diseases
-artifacts/data_ingestion/data.zip
+artifacts/*
