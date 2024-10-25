@@ -15,4 +15,5 @@ scipy
 Flask
 Flask-Cors
 ensure
+kaggle
 -e .
