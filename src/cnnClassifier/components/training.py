@@ -73,7 +73,8 @@ class Training:
             validation_steps=self.validation_steps,
             validation_data=self.valid_generator,
             callbacks=callback_list
-        )
+            )
+
 
         self.save_model(
             path=self.config.trained_model_path,
