@@ -20,7 +20,6 @@ class PredictionPipeline:
         test_image = image.img_to_array(test_image)
         test_image = np.expand_dims(test_image, axis = 0)
         result = np.argmax(model.predict(test_image), axis=1)
-        print(result)
 
         if result[0] == 0:
             prediction = 'Coccidiosis'
@@ -36,5 +35,8 @@ class PredictionPipeline:
         
         elif result[0] == 3:
             prediction = 'Salmonella'
+            return [{ "image" : prediction}]
         
-        return [{ "image" : prediction}]
+        else:
+            prediction = 'Unknown'
+            return [{ "image" : prediction}]

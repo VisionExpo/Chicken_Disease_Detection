@@ -15,7 +15,7 @@ class Training:
     def train_valid_generator(self):
 
         datagenerator_kwargs = dict(
-            rescale = 1./255,
+            rescale=1./255,
             validation_split=0.20
         )
 
@@ -53,30 +53,31 @@ class Training:
             directory=self.config.training_data,
             subset="training",
             shuffle=True,
-            class_mode ="categorical",
+            class_mode="categorical",
             **dataflow_kwargs
         )
 
     @staticmethod
     def save_model(path: Path, model: tf.keras.Model):
-        model.save(path)
-
+        model.save(path)  # Saving in the .keras format
 
     def train(self, callback_list: list):
+        # Calculate steps per epoch and validation steps
         self.steps_per_epoch = self.train_generator.samples // self.train_generator.batch_size
         self.validation_steps = self.valid_generator.samples // self.valid_generator.batch_size
 
-        self.model.fit(
+        # Train the model
+        history = self.model.fit(
             self.train_generator,
             epochs=self.config.params_epochs,
             steps_per_epoch=self.steps_per_epoch,
             validation_steps=self.validation_steps,
             validation_data=self.valid_generator,
             callbacks=callback_list
-            )
-
-
-        self.save_model(
-            path=self.config.trained_model_path,
-            model=self.model
         )
+
+        # Save the model after training
+        self.save_model(path=self.config.trained_model_path, model=self.model)
+
+        # Return the training history
+        return history
