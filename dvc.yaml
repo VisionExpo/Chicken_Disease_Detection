@@ -39,3 +39,18 @@ stages:
       - AUGMENTATION
     outs:
       - artifacts/training/model.keras
+
+  evaluation:
+    cmd: python src/cnnClassifier/pipeline/stage_04_evaluation.py
+    deps:
+      - src/cnnClassifier/pipeline/stage_04_evaluation.py
+      - config/config.yaml
+      - artifacts/training/model.keras
+      - artifacts/data_ingestion/poultry_diseases
+      - params.yaml
+    params:
+      - IMAGE_SIZE
+      - BATCH_SIZE
+    metrics:
+    - scores.json:
+        cache: false

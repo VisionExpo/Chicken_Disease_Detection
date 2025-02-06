@@ -6,7 +6,9 @@ from tqdm import tqdm
 import zipfile
 import logging
 from pathlib import Path
+from requests.exceptions import RequestException, ChunkedEncodingError
 from kaggle.api.kaggle_api_extended import KaggleApi
+from cnnClassifier.utils.common import get_size
 from cnnClassifier.entity.config_entity import DataIngestionConfig
 
 logger = logging.getLogger(__name__)
