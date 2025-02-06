@@ -13,7 +13,7 @@ class PredictionPipeline:
     
     def predict(self):
         # load model
-        model = load_model(os.path.join("artifacts","training", "model.h5"))
+        model = load_model(os.path.join("artifacts","training", "model.keras"))
 
         imagename = self.filename
         test_image = image.load_img(imagename, target_size = (224,224))
@@ -22,9 +22,19 @@ class PredictionPipeline:
         result = np.argmax(model.predict(test_image), axis=1)
         print(result)
 
-        if result[0] == 1:
-            prediction = 'Healthy'
-            return [{ "image" : prediction}]
-        else:
+        if result[0] == 0:
             prediction = 'Coccidiosis'
             return [{ "image" : prediction}]
+        
+        elif result[0] == 1:
+            prediction = 'Healthy'
+            return [{ "image" : prediction}]
+        
+        elif result[0] == 2:
+            prediction = 'NCD'
+            return [{ "image" : prediction}]
+        
+        elif result[0] == 3:
+            prediction = 'Salmonella'
+        
+        return [{ "image" : prediction}]
