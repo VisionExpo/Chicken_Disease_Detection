@@ -16,7 +16,7 @@ class ConfigurationManager:
     def __init__(self, config_filepath=CONFIG_FILE_PATH, params_filepath=PARAMS_FILE_PATH):
         self.config = self.read_yaml(config_filepath)
         self.params = self.read_yaml(params_filepath)
-        create_directories([self.config.artifacts_root])
+        create_directories([self.config["artifacts_root"]])
 
     def read_yaml(self, file_path: Path) -> ConfigBox:
         with open(file_path, "r") as file:

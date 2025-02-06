@@ -10,17 +10,20 @@ class DataIngestionTrainingPipeline:
         pass
 
     def main(self):
-        # Initialize Configuration Manager
-        config_manager = ConfigurationManager()
-        
-        # Get Data Ingestion Configuration
-        data_ingestion_config = config_manager.get_data_ingestion_config()
-        
-        # Create DataIngestion object and download/extract data
-        data_ingestion = DataIngestion(config=data_ingestion_config)
-        data_ingestion.download_file()
-        data_ingestion.extract_zip_file()
-        
+        try:
+            # Initialize Configuration Manager
+            config_manager = ConfigurationManager()
+            
+            # Get Data Ingestion Configuration
+            data_ingestion_config = config_manager.get_data_ingestion_config()
+            
+            # Create DataIngestion object and download/extract data
+            data_ingestion = DataIngestion(config=data_ingestion_config)
+            data_ingestion.download_file()
+            data_ingestion.extract_zip_file()
+            
+        except Exception as e:
+            raise e
     
 
 

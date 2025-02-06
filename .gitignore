@@ -6,6 +6,12 @@ __pycache__/
 # C extensions
 *.so
 
+# Virtual Environments
+chicken/
+
+# Datasets
+artifacts/
+
 # Distribution / packaging
 .Python
 build/
