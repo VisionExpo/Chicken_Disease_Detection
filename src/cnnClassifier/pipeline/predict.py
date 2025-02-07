@@ -8,19 +8,40 @@ class PredictionPipeline:
         self.filename = filename
 
     def predict(self):
-        # Load model
-        model = load_model(os.path.join("artifacts", "training", "model.keras"))
+        try:
+            # Load model
+            model_path = os.path.join("artifacts", "training", "model.keras")
+            if not os.path.exists(model_path):
+                return {"error": "Model file does not exist."}
+            model = load_model(model_path)
 
-        imagename = self.filename
-        test_image = image.load_img(imagename, target_size=(224, 224))
+        except Exception as e:
+            return {"error": f"Model loading failed: {str(e)}"}
 
-        test_image = image.img_to_array(test_image)
-        test_image = np.expand_dims(test_image, axis=0)
-        result = np.argmax(model.predict(test_image), axis=1)
+        try:
+            imagename = self.filename
+            if not os.path.exists(imagename):
+                return {"error": "Image file does not exist."}
+            test_image = image.load_img(imagename, target_size=(224, 224))
+            test_image = image.img_to_array(test_image)
+            test_image = np.expand_dims(test_image, axis=0)
 
-        # Example accuracy data (replace with actual model accuracy)
-        accuracy = [0.6, 0.7, 0.8, 0.85, 0.9]  # Training accuracy
-        validation_accuracy = [0.55, 0.65, 0.75, 0.8, 0.85]  # Validation accuracy
+            print("Input image shape:", test_image.shape)  # Debugging statement to log input image shape
+            predictions = model.predict(test_image)
+            result = np.argmax(predictions, axis=1)
+            print("Model predictions:", predictions)  # Debugging statement to log model predictions
+
+        except Exception as e:
+            return {"error": f"Image processing failed: {str(e)}"}
+
+        # Define accuracy and validation_accuracy
+        expected_labels = [0, 1, 2, 3]  # Define actual expected labels based on your dataset
+        expected_validation_labels = [0, 1, 2, 3]  # Define actual expected validation labels
+
+        print("Predictions:", predictions)  # Debugging statement to log predictions
+        print("Expected Labels:", expected_labels)  # Debugging statement to log expected labels
+        accuracy = np.mean(predictions == expected_labels)  # Calculate accuracy
+        validation_accuracy = np.mean(predictions == expected_validation_labels)  # Calculate validation accuracy
 
         if result[0] == 0:
             prediction = 'Coccidiosis'
@@ -33,8 +54,11 @@ class PredictionPipeline:
         else:
             prediction = 'Unknown'
 
-        return {
+        response = {
             "prediction": prediction,
-            "accuracy": accuracy,
+            "accuracy": accuracy,  # Return calculated accuracy
             "validation_accuracy": validation_accuracy
         }
+        
+        print("Response being sent:", response)  # Debugging statement to log the response
+        return response

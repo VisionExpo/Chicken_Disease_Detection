@@ -120,11 +120,20 @@ def get_size(path: Path) -> str:
     return f"~ {size_in_kb} KB"
 
 
-def decodeImage(imgstring, fileName):
-    imgdata = base64.b64decode(imgstring)
-    with open(fileName, 'wb') as f:
+def decodeImage(imgstring: str, fileName: str) -> None:
+
+    try:
+        imgdata = base64.b64decode(imgstring)
+    except Exception as e:
+        logger.error(f"Failed to decode image: {str(e)}")
+        raise ValueError("Invalid image data.")
+
+    with open(fileName, 'wb') as f: 
         f.write(imgdata)
-        f.close()
+
+        f.write(imgdata)
+        logger.info(f"Image successfully decoded and saved to {fileName}")
+
 
 
 def encodeImageIntoBase64(croppedImagePath):
