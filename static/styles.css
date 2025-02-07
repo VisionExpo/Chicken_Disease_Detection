@@ -1,0 +1,150 @@
+/* Body and general styling */
+body {
+    background-color: #f0f8ff;
+    font-family: 'Arial', sans-serif;
+    color: #333;
+    padding: 0;
+    margin: 0;
+}
+
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 30px;
+}
+
+/* Drop zone for image */
+.drop-zone {
+    border: 2px dashed #007bff;
+    padding: 20px;
+    text-align: center;
+    cursor: pointer;
+}
+
+/* Image preview styling */
+.image-preview-container {
+    margin-top: 20px;
+    text-align: center;
+    width: 100%;
+    overflow: hidden;
+}
+
+/* Style the image preview */
+.image-preview {
+    max-width: 100%; /* Ensure the image doesn't overflow */
+    max-height: 400px; /* Set a height limit */
+    object-fit: contain; /* Maintain aspect ratio */
+    border-radius: 10px;
+    display: block;
+    margin: 0 auto;
+}
+
+h3 {
+    font-size: 28px;
+    color: #FF6347;
+    font-weight: 700;
+    text-shadow: 2px 2px 10px rgba(255, 105, 180, 0.6);
+}
+
+.upload-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.drop-zone {
+    height: 250px;
+    width: 100%;
+    border: 3px dashed #FF6347;
+    border-radius: 15px;
+    background-color: #FFF8DC;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.drop-zone:hover {
+    background-color: #f0f8ff;
+    border-color: #FF4500;
+}
+
+.drop-zone input[type="file"] {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.drop-zone p {
+    color: #FF6347;
+    font-size: 18px;
+    text-align: center;
+    font-weight: bold;
+}
+
+.btn-detect {
+    background-color: #FF6347;
+    color: white;
+    border-radius: 50px;
+    border: none;
+    padding: 15px 30px;
+    width: 100%;
+    font-size: 18px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    cursor: pointer;
+}
+
+.btn-detect:hover {
+    background-color: #FF4500;
+    transform: scale(1.1);
+}
+
+.result-box {
+    margin-top: 20px;
+    padding: 20px;
+    border-radius: 15px;
+    background-color: #f9f9f9;
+    border: 3px solid #e0e0e0;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+}
+
+.no-image-text {
+    text-align: center;
+    color: #FF6347;
+    font-size: 16px;
+}
+
+.jsonRes {
+    text-align: center;
+    font-size: 18px;
+    color: #333;
+}
+
+.graph-section {
+    padding: 20px;
+    background-color: #FFF8DC;
+    border-radius: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.footer-logo {
+    position: absolute;
+    bottom: 10px;
+    right: 15px;
+}
+
+.footer-logo img {
+    width: 70px;
+    height: 70px;
+    animation: bounce 1.5s ease-in-out infinite;
+}
+
+@keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-15px); }
+}
