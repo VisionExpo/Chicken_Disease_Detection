@@ -2,18 +2,19 @@ from cnnClassifier.entity.config_entity import TrainingConfig
 import tensorflow as tf
 from pathlib import Path
 
-
 class Training:
     def __init__(self, config: TrainingConfig):
         self.config = config
-    
-    def get_base_model(self):
-        self.model = tf.keras.models.load_model(
-            self.config.updated_base_model_path
-        )
-    
-    def train_valid_generator(self):
+        self.model = None  # Initialize model as None
 
+
+
+        # Remove the create_model method
+        self.model = self.get_base_model()  # Use the model from prepare_base_model
+
+
+
+    def train_valid_generator(self):
         datagenerator_kwargs = dict(
             rescale=1./255,
             validation_split=0.20
@@ -81,3 +82,10 @@ class Training:
 
         # Return the training history
         return history
+
+# Execute the training
+if __name__ == "__main__":
+    config = TrainingConfig()  # Assuming you have a way to initialize this
+    training_instance = Training(config)
+    training_instance.train_valid_generator()
+    training_instance.train(callback_list=[])  # Pass any callbacks if needed

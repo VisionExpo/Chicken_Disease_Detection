@@ -1,5 +1,8 @@
 from flask import Flask, request, jsonify, render_template
+
 import os
+import subprocess
+
 from flask_cors import CORS, cross_origin
 from cnnClassifier.utils.common import decodeImage
 from cnnClassifier.pipeline.predict import PredictionPipeline
@@ -18,12 +21,13 @@ class ClientApp:
 @app.route("/", methods=['GET'])
 @cross_origin()
 def home():
-    return render_template('index.html')
+    return render_template('index.html')  # Ensure this serves the latest version
 
 @app.route("/train", methods=['GET','POST'])
 @cross_origin()
 def trainRoute():
-    result = os.system("dvc repro")
+    result = subprocess.run(["dvc", "repro"], capture_output=True, text=True)
+
     if result != 0:
         return jsonify({"error": "Training failed"}), 500
     return "Training done successfully!"
