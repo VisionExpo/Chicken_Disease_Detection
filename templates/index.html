@@ -5,10 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chicken Disease Detection</title>
-
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
-
+    <!-- Optional custom CSS -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -23,15 +22,11 @@
         }
 
         .container {
-            max-width: 600px;
+            max-width: 800px;
             margin: 0 auto;
             background-color: #ffffff;
             padding: 30px;
             box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .form-group {
-            margin-bottom: 15px;
         }
 
         .btn-primary {
@@ -57,11 +52,13 @@
     <h1>Chicken Disease Detection</h1>
 
     <div class="container">
+        <!-- File Upload Section -->
         <div class="form-group">
             <input type="file" id="fileinput" accept="image/*" style="display: none;" onchange="handleFileUpload(event);">
             <button class="btn btn-primary" onclick="document.getElementById('fileinput').click();">Upload Image</button>
         </div>
 
+        <!-- Predict Button -->
         <button class="btn btn-success" onclick="predictImage();">Predict</button>
 
         <!-- Loading Indicator -->
@@ -74,9 +71,18 @@
         </div>
     </div>
 
+    <!-- Link to History Page -->
+    <div class="text-center mt-4">
+        <a href="/history" class="btn btn-info">View Training History</a>
+    </div>
+
+    <!-- Bootstrap JS (Optional) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+
     <script>
         let base_data = null;
 
+        // Handle file upload
         function handleFileUpload(event) {
             const file = event.target.files[0];
             if (file) {
@@ -88,6 +94,7 @@
             }
         }
 
+        // Predict image
         function predictImage() {
             if (!base_data) {
                 alert("Please upload an image first");
@@ -117,9 +124,6 @@
                 });
         }
     </script>
-
-    <!-- Bootstrap JS (Optional) -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

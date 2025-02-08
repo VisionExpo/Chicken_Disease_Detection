@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 import base64
 import logging
+from tensorflow.keras.utils import plot_model
 
 
 
@@ -139,3 +140,20 @@ def decodeImage(imgstring: str, fileName: str) -> None:
 def encodeImageIntoBase64(croppedImagePath: str) -> str:
     with open(croppedImagePath, "rb") as f:
         return base64.b64encode(f.read()).decode()
+    
+
+@ensure_annotations
+def save_model_plot(model, output_path: str = "static/model_architecture.png"):
+    """Saves the model architecture as an image.
+
+    Args:
+        model (tensorflow.keras.Model): The Keras model to plot.
+        output_path (str): Path where the image will be saved. Defaults to "static/model_architecture.png".
+    """
+    try:
+        os.makedirs(os.path.dirname(output_path), exist_ok=True)
+        plot_model(model, to_file=output_path, show_shapes=True, show_layer_names=True)
+        logger.info(f"Model architecture saved at: {output_path}")
+    except Exception as e:
+        logger.error(f"Error in saving model plot: {str(e)}")
+        raise e
