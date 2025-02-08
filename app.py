@@ -1,14 +1,8 @@
 from flask import Flask, request, jsonify, render_template
-
-import os
-import subprocess
-
 from flask_cors import CORS, cross_origin
-from cnnClassifier.utils.common import decodeImage
+from cnnClassifier.utils.common import decodeImage  # Importing the decodeImage function
 from cnnClassifier.pipeline.predict import PredictionPipeline
-
-os.putenv('LANG', 'en_US.UTF-8')
-os.putenv('LC_ALL', 'en_US.UTF-8')
+import os
 
 app = Flask(__name__)
 CORS(app)
@@ -23,27 +17,27 @@ class ClientApp:
 def home():
     return render_template('index.html')  # Ensure this serves the latest version
 
-@app.route("/train", methods=['GET','POST'])
-@cross_origin()
-def trainRoute():
-    result = subprocess.run(["dvc", "repro"], capture_output=True, text=True)
-
-    if result != 0:
-        return jsonify({"error": "Training failed"}), 500
-    return "Training done successfully!"
-
 @app.route("/predict", methods=['POST'])
 @cross_origin()
 def predictRoute():
     if 'image' not in request.json:
         return jsonify({"error": "No image provided"}), 400
     image = request.json['image']
-    decodeImage(image, clApp.filename)
-    result = clApp.classifier.predict()
-    if 'error' in result:
-        return jsonify(result), 500
-    return jsonify(result)
+    
+    try:
+        # Decode image and save it
+        decodeImage(image, clApp.filename)
+        
+        # Run prediction on the decoded image
+        result = clApp.classifier.predict()
+        
+        if 'error' in result:
+            return jsonify(result), 500
+        return jsonify(result)
+    
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
     clApp = ClientApp()
-    app.run(host='0.0.0.0', port=8080) #local host
+    app.run(host='0.0.0.0', port=8080)  # Localhost
