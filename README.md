@@ -3,6 +3,30 @@
 ## Introduction
 This project is designed to build an AI-based poultry disease detection system using deep learning. The goal is to classify poultry diseases from images, enabling farmers to easily monitor and manage their poultry health. By using Convolutional Neural Networks (CNNs) and transfer learning with the VGG16 pre-trained model, this system can predict diseases from chicken images accurately. The solution includes a web-based user interface where users can upload chicken images, and the system will predict the disease in real-time.
 
+## Live Demo
+Try out the live application here: [Chicken Disease Detector](https://chicken-disease-detector.onrender.com)
+
+## Testing with Sample Images
+To help you get started with testing the application, we provide sample images representing different chicken conditions. Here's how to use them:
+
+### Available Sample Images
+The following sample images are available directly on the website:
+- **Cocci Image**: Example of a chicken affected by Coccidiosis
+- **Healthy Image**: Example of a healthy chicken
+- **NCD Image**: Example of a chicken with Newcastle Disease
+- **Salmo Image**: Example of a chicken with Salmonella
+
+### How to Test the Application
+1. Visit the [live application](https://chicken-disease-detector.onrender.com)
+2. On the main page, scroll down to find the "Download Sample Images" section
+3. Download one or more sample images using the provided buttons
+4. Click the "Upload Image" button and select your downloaded sample image
+5. Click "Predict" to see the model's prediction
+6. The result will appear in the prediction text area
+7. You can try different sample images to test various conditions
+
+The sample images are carefully selected to demonstrate the model's ability to detect different chicken diseases and healthy conditions. Feel free to use these images to understand how the model performs with different cases.
+
 ## Objectives
 The objectives of this project are:
 - **Disease Detection**: Develop an AI-powered model to classify poultry diseases from images.
