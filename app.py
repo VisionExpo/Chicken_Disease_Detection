@@ -1,9 +1,10 @@
 from flask import Flask, request, jsonify, render_template
 from flask_cors import CORS, cross_origin
-from cnnClassifier.utils.common import decodeImage  # Ensure this is the correct import
-from cnnClassifier.pipeline.predict import PredictionPipeline
-from cnnClassifier.entity.config_entity import TrainingConfig
-from cnnClassifier.components.training import Training  # Ensure this is the correct import
+from src.cnnClassifier.utils.common import decodeImage  # Ensure this is the correct import
+from src.cnnClassifier.pipeline.predict import PredictionPipeline
+from src.cnnClassifier.entity.config_entity import TrainingConfig
+from src.cnnClassifier.components.training import Training  # Ensure this is the correct import
+
 from pathlib import Path
 import os
 import matplotlib.pyplot as plt
