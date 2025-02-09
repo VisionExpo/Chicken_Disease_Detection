@@ -60,6 +60,52 @@ Using VGG16's pre-trained weights on ImageNet helps the model learn essential fe
 
 ### Transfer Learning Approach
 
+```
++---------------------+
+|      Input Layer    |
+|      (224x224x3)   |
++---------------------+
+          |
+          v
++---------------------+
+|      VGG16          |
+|  (Base Model)      |
+|                     |
+|  Conv1: 64 Filters  |
+|  Conv2: 64 Filters  |
+|  Pool1              |
+|                     |
+|  Conv3: 128 Filters |
+|  Conv4: 128 Filters |
+|  Pool2              |
+|                     |
+|  Conv5: 256 Filters |
+|  Conv6: 256 Filters |
+|  Pool3              |
++---------------------+
+          |
+          v
++---------------------+
+|  Fully Connected    |
+|        (Dense1)    |
+|      4096 Neurons   |
++---------------------+
+          |
+          v
++---------------------+
+|  Fully Connected    |
+|        (Dense2)    |
+|      4096 Neurons   |
++---------------------+
+          |
+          v
++---------------------+
+|     Output Layer    |
+|      (Softmax)     |
+|      4 Classes      |
++---------------------+
+
+
    - **Feature Extraction**: VGG16 is used as a feature extractor, leveraging its ability to detect fundamental image features (like edges and textures).
    - **Fine-Tuning**: The top layers of the VGG16 model are replaced with custom layers to tailor the model for poultry disease classification.
    - **Data Augmentation**: Techniques such as rotation, flipping, and zooming are applied to the dataset, making the model more robust and preventing overfitting.
@@ -69,6 +115,9 @@ Using VGG16's pre-trained weights on ImageNet helps the model learn essential fe
 ### Test Accuracy
 - **Accuracy**: 85.60%
 - **Loss**: 0.3822
+- **Precision**: [Insert Precision Here]
+- **Recall**: [Insert Recall Here]
+- **F1 Score**: [Insert F1 Score Here]
 
 ### High-Level Design (HLD)
 
