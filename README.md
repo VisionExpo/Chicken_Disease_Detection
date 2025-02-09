@@ -1,13 +1,10 @@
-# Chicken-Disease-Classification-Project
+# Chicken Disease Detection
 
 ## Introduction
-
 This project is designed to build an AI-based poultry disease detection system using deep learning. The goal is to classify poultry diseases from images, enabling farmers to easily monitor and manage their poultry health. By using Convolutional Neural Networks (CNNs) and transfer learning with the VGG16 pre-trained model, this system can predict diseases from chicken images accurately. The solution includes a web-based user interface where users can upload chicken images, and the system will predict the disease in real-time.
 
 ## Objectives
-
 The objectives of this project are:
-
 - **Disease Detection**: Develop an AI-powered model to classify poultry diseases from images.
 - **Real-Time Prediction**: Provide users with real-time predictions through an intuitive web interface.
 - **Data Management**: Ensure efficient ingestion and processing of large image datasets.
@@ -15,7 +12,6 @@ The objectives of this project are:
 - **Cloud Deployment**: Deploy the trained model on cloud services (Render, AWS, or Azure) for scalability and real-time access.
 
 ## Model Architecture
-
 The model for poultry disease detection leverages **VGG16**, a pre-trained deep learning model. The architecture consists of:
 
 ### 1. Base Model (VGG16)
@@ -34,10 +30,10 @@ The model for poultry disease detection leverages **VGG16**, a pre-trained deep 
 ### Model Details
 - **Parameters**:
   - Image Size: [224, 224, 3]
-  - Batch Size: 32
-  - Epochs: 10
+  - Batch Size: 16
+  - Epochs: 9
   - Classes: 4
-  - Learning Rate: 0.01
+  - Learning Rate: 0.0001
   - Using ImageNet weights
   - Data augmentation enabled
 
@@ -47,9 +43,7 @@ The model for poultry disease detection leverages **VGG16**, a pre-trained deep 
 - **Output Layer**: A softmax activation layer, which classifies the input image into one of the predefined disease classes.
 
 ## Approach
-
 ### Pre-Trained Model: VGG16
-
 VGG16 is a well-known architecture in the deep learning community, consisting of 16 layers:
    - **Convolutional Layers**: 13 convolutional layers that extract features from images.
    - **Pooling Layers**: Max-pooling layers reduce spatial dimensions to make computation more efficient.
@@ -59,104 +53,29 @@ VGG16 is a well-known architecture in the deep learning community, consisting of
 Using VGG16's pre-trained weights on ImageNet helps the model learn essential features quickly and efficiently. The model is fine-tuned using our poultry disease dataset, ensuring it specializes in poultry disease classification.
 
 ### Transfer Learning Approach
-
-```
-+---------------------+
-|      Input Layer    |
-|      (224x224x3)   |
-+---------------------+
-          |
-          v
-+---------------------+
-|      VGG16          |
-|  (Base Model)      |
-|                     |
-|  Conv1: 64 Filters  |
-|  Conv2: 64 Filters  |
-|  Pool1              |
-|                     |
-|  Conv3: 128 Filters |
-|  Conv4: 128 Filters |
-|  Pool2              |
-|                     |
-|  Conv5: 256 Filters |
-|  Conv6: 256 Filters |
-|  Pool3              |
-+---------------------+
-          |
-          v
-+---------------------+
-|  Fully Connected    |
-|        (Dense1)    |
-|      4096 Neurons   |
-+---------------------+
-          |
-          v
-+---------------------+
-|  Fully Connected    |
-|        (Dense2)    |
-|      4096 Neurons   |
-+---------------------+
-          |
-          v
-+---------------------+
-|     Output Layer    |
-|      (Softmax)     |
-|      4 Classes      |
-+---------------------+
-
+![Model Architecture](static\model_architecture.jpeg)
 
    - **Feature Extraction**: VGG16 is used as a feature extractor, leveraging its ability to detect fundamental image features (like edges and textures).
    - **Fine-Tuning**: The top layers of the VGG16 model are replaced with custom layers to tailor the model for poultry disease classification.
    - **Data Augmentation**: Techniques such as rotation, flipping, and zooming are applied to the dataset, making the model more robust and preventing overfitting.
 
 ## Model Performance
-
 ### Test Accuracy
-- **Accuracy**: 85.60%
+- **Accuracy**: 94.95%
 - **Validation Accuracy**: {{ history_data['val_accuracy'][-1] }}
-- **Loss**: 0.3822
+- **Loss**: 0.1512
 - **Validation Loss**: {{ history_data['val_loss'][-1] }}
-- **Precision**: [Insert Precision Here]
-- **Recall**: [Insert Recall Here]
-- **F1 Score**: [Insert F1 Score Here]
 
 ### Graphs
 - **Accuracy vs Validation Accuracy**: 
-  ![Accuracy vs Validation Accuracy](static/graphs/accuracy_vs_val_accuracy.png)
+  ![Accuracy vs Validation Accuracy](static/accuracy_vs_val_accuracy.png)
   
 - **Loss vs Validation Loss**: 
-  ![Loss vs Validation Loss](static/graphs/loss_vs_val_loss.png)
+  ![Loss vs Validation Loss](static/loss_vs_val_loss.png)
 
 ## High-Level Design (HLD)
-
 ### System Architecture Overview
-```
-+-------------------+
-|   User Interface   |
-|   (Flask App)     |
-+-------------------+
-          |
-          v
-+-------------------+
-|   API Endpoints   |
-+-------------------+
-          |
-          v
-+-------------------+
-|   Data Ingestion  |
-+-------------------+
-          |
-          v
-+-------------------+
-|   Model Training  |
-+-------------------+
-          |
-          v
-+-------------------+
-|   Model Evaluation |
-+-------------------+
-```
+![High-Level Design](static\HLD.png)
 
 ### Major Components and their Interactions
 - **User Interface**: Interacts with users and sends requests to the API.
@@ -176,30 +95,8 @@ Using VGG16's pre-trained weights on ImageNet helps the model learn essential fe
 - Modular architecture for easy updates and maintenance
 
 ## Low-Level Design (LLD)
-
 ### Detailed Component Architecture
-```
-+---------------------+
-|   Data Ingestion    |
-|---------------------|
-| - download_file()   |
-| - extract_zip_file()|
-+---------------------+
-
-+---------------------+
-|   Model Training    |
-|---------------------|
-| - train()           |
-| - save_model()      |
-+---------------------+
-
-+---------------------+
-|   Model Evaluation  |
-|---------------------|
-| - evaluate_model()  |
-| - log_results()     |
-+---------------------+
-```
+![Low-Level Design](static\LLD.png)
 
 ### Data Structures
 - **DataIngestionConfig**: Configuration for data ingestion, including:
@@ -242,56 +139,37 @@ Using VGG16's pre-trained weights on ImageNet helps the model learn essential fe
 4. **View the Results**: Once the prediction is complete, the result will be displayed in the designated output area. You can also view the training history by clicking the "View Training History" button.
 
 ### Pipeline Workflows
-```
-+-------------------+
-|   Data Ingestion  |
-+-------------------+
-          |
-          v
-+-------------------+
-| Model Preparation  |
-+-------------------+
-          |
-          v
-+-------------------+
-|   Model Training   |
-+-------------------+
-          |
-          v
-+-------------------+
-| Model Evaluation   |
-+-------------------+
-```
+![Pipeline Workflow](static\pipeline_workflow.png)
 
 ### API Endpoints
 - **`/predict`**: 
   - **Method**: POST
   - **Description**: Endpoint for making predictions on uploaded images.
-  - **Request Body**: 
+  - **Request Body**:
     ```json
     {
       "image": "base64_encoded_image_data"
     }
     ```
-  - **Response**: 
+  - **Response**:
     ```json
     {
       "prediction": "class_label"
     }
     ```
-
+    
 - **`/status`**: 
   - **Method**: GET
   - **Description**: Endpoint for checking the service status.
-  - **Response**: 
+  - **Response**:
     ```json
     {
       "status": "running"
     }
     ```
+![API End-points](static\api_endpoints.png)
 
 ## History Analysis
-
 ### Overview
 The history page provides insights into the training process of the poultry disease detection model. It displays key metrics and visualizations that help track the model's performance over time.
 
@@ -309,7 +187,6 @@ It also provides insights into the low-level design, focusing on the implementat
 The history page explains how the Kaggle API is used for data ingestion, ensuring that the latest datasets are available for training.
 
 ## Workflows
-
 1. Update config.yaml
 2. Update secrets.yaml [Optional]
 3. Update params.yaml
@@ -320,40 +197,22 @@ The history page explains how the Kaggle API is used for data ingestion, ensurin
 8. Update the main.py
 9. Update the dvc.yaml
 
-
 # How to run?
 ### STEPS:
-
 Clone the repository
-
 ```bash
 https://github.com/VisionExpo/Chicken_Disease_Detection-main
 ```
 ### STEP 01- Create a virtual environment named "chicken" using Python 3.10
-
 ```bash
 python -m venv chicken
 ```
-
-```bash
-# Activate the virtual environment
-# On Windows
-chicken\Scripts\activate
-
-# On macOS/Linux
-source chicken/bin/activate
-```
-
 ### STEP 02- install the requirements
 ```bash
 pip install -r requirements.txt
 ```
-
+### Finally run the following command
 ```bash
-# Finally run the following command
 python app.py
 ```
-
-Now,
-```bash
-open up your local host and port
+Now, open up your local host and port.
