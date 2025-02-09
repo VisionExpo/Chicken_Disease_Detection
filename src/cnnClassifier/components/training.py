@@ -63,7 +63,11 @@ class Training:
 
     @staticmethod
     def save_model(path: Path, model: tf.keras.Model):
-        model.save(path)
+        model.save(path)  # Save in .keras format
+        # Save in pickle format
+        import joblib
+        joblib.dump(model, path.with_suffix('.pkl'))  # Save as pickle file
+
 
     def train(self, callback_list):
 
