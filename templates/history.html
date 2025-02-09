@@ -3,134 +3,144 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Poultry Disease Detection History</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Training History - Poultry Disease Detection</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
     <style>
-        .img-fluid {
-            max-width: 100%;
-            height: auto;
-        }
-        .section-title {
-            margin-top: 40px;
-            font-size: 1.8em;
-        }
         .section-content {
-            font-size: 1.1em;
-        }
-        .section-content ul {
-            list-style-type: disc;
             margin-left: 20px;
         }
-        .section-content ul li {
-            margin-bottom: 10px;
+        .graph-container {
+            margin-bottom: 40px;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
         }
     </style>
 </head>
 <body>
-    <div class="container mt-5">
-        <h1 class="text-center">Poultry Disease Detection Model - History</h1>
 
-        <!-- Training History -->
-        <div class="mt-4">
-            <h3 class="section-title">Training History</h3>
-            <div class="row">
-                <div class="col-md-6">
-                    <h4>Model Accuracy vs Validation Accuracy</h4>
-                    <img src="{{ url_for('static', filename='training_accuracy.png') }}" alt="Accuracy Plot" class="img-fluid">
-                </div>
-                <div class="col-md-6">
-                    <h4>Model Loss vs Validation Loss</h4>
-                    <img src="{{ url_for('static', filename='training_loss.png') }}" alt="Loss Plot" class="img-fluid">
-                </div>
-            </div>
-            <h5>Model Metrics:</h5>
+<div class="container">
+    <h1 class="text-center my-5">Training History</h1>
+    
+    <!-- Model Metrics Section -->
+    <section>
+        <h3>Model Metrics:</h3>
+        <ul class="section-content">
+            <li><strong>Accuracy:</strong> {{ history_data['accuracy'][-1] }}</li>
+            <li><strong>Validation Accuracy:</strong> {{ history_data['val_accuracy'][-1] }}</li>
+            <li><strong>Loss:</strong> {{ history_data['loss'][-1] }}</li>
+            <li><strong>Validation Loss:</strong> {{ history_data['val_loss'][-1] }}</li>
+        </ul>
+    </section>
+    
+    <!-- Training History Section -->
+    <section>
+        <h3>Training History:</h3>
+        <div class="graph-container">
+            <h5>Accuracy vs Validation Accuracy:</h5>
+            <img src="{{ url_for('static', filename='graphs/accuracy_vs_val_accuracy.png') }}" alt="Accuracy vs Validation Accuracy">
+        </div>
+        <div class="graph-container">
+            <h5>Loss vs Validation Loss:</h5>
+            <img src="{{ url_for('static', filename='graphs/loss_vs_val_loss.png') }}" alt="Loss vs Validation Loss">
+        </div>
+    </section>
+    
+    <!-- High-Level Design Section -->
+    <section>
+        <h3>High-Level Design (HLD):</h3>
+        <p>
+            The High-Level Design outlines the entire system's architecture and interaction. It consists of:
             <ul>
-                <li><strong>Accuracy:</strong> {{ history_data['accuracy'][-1] }}</li>
-                <li><strong>Validation Accuracy:</strong> {{ history_data['val_accuracy'][-1] }}</li>
-                <li><strong>Loss:</strong> {{ history_data['loss'][-1] }}</li>
-                <li><strong>Validation Loss:</strong> {{ history_data['val_loss'][-1] }}</li>
+                <li><strong>Data Collection:</strong> Gathering images of poultry for disease detection.</li>
+                <li><strong>Preprocessing Pipeline:</strong> Cleaning and augmenting the dataset for training, including image resizing, normalization, and augmentation techniques.</li>
+                <li><strong>Model Training:</strong> Using a pre-trained VGG16 model with transfer learning to detect poultry diseases.</li>
+                <li><strong>Deployment Pipeline:</strong> Once the model is trained, it is deployed for inference, making it accessible to users in real-time.</li>
             </ul>
+        </p>
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='images/hld.png') }}" alt="High-Level Design">
         </div>
-
-        <!-- High-Level Design (HLD) -->
-        <div class="mt-4">
-            <h3 class="section-title">High-Level Design (HLD)</h3>
-            <p class="section-content">
-                The Poultry Disease Detection system uses machine learning to classify poultry diseases based on images. The system follows a simple structure:
-            </p>
-            <ul class="section-content">
-                <li><strong>Data Ingestion:</strong> Collect images of poultry and their diseases, stored in a designated directory. Data is ingested using the Kaggle API to download datasets directly from Kaggle.</li>
-                <li><strong>Model Training:</strong> A pre-trained VGG16 model is fine-tuned using the poultry dataset. Data augmentation is applied to improve model performance.</li>
-                <li><strong>Prediction:</strong> The trained model makes predictions based on input images, detecting specific poultry diseases.</li>
-                <li><strong>Visualization:</strong> The system displays training progress, accuracy, and loss graphs for performance tracking.</li>
+    </section>
+    
+    <!-- Low-Level Design Section -->
+    <section>
+        <h3>Low-Level Design (LLD):</h3>
+        <p>
+            The Low-Level Design delves into the details of each component:
+            <ul>
+                <li><strong>Dataset:</strong> Consists of images of poultry, labeled for various diseases (e.g., Newcastle Disease, Infectious Bronchitis, etc.). The dataset is augmented using techniques such as rotation, flipping, and zooming to improve model robustness.</li>
+                <li><strong>Model Architecture:</strong> We use VGG16 as the base model, with the initial layers frozen. New fully connected layers are added to adapt the model for poultry disease detection. The model includes dropout and batch normalization layers for better generalization.</li>
+                <li><strong>Training Process:</strong> The model is trained using categorical cross-entropy loss and an Adam optimizer. Early stopping is used to prevent overfitting, and training is done in batches to improve efficiency.</li>
+                <li><strong>Deployment:</strong> The trained model is packaged and deployed using a Flask application that exposes a REST API for real-time predictions.</li>
             </ul>
+        </p>
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='images/lld.png') }}" alt="Low-Level Design">
         </div>
+    </section>
 
-        <!-- Kaggle API Data Ingestion -->
-        <div class="mt-4">
-            <h3 class="section-title">Kaggle API Data Ingestion</h3>
-            <p class="section-content">
-                The Kaggle API is used to download datasets directly into the application, ensuring seamless data ingestion for model training. The dataset is then preprocessed and fed into the training pipeline. Below is an overview of the process:
-            </p>
-            <ul class="section-content">
-                <li><strong>API Authentication:</strong> The Kaggle API is authenticated using an API token to gain access to the dataset.</li>
-                <li><strong>Dataset Download:</strong> The poultry disease dataset is downloaded directly from Kaggle using the API, ensuring that the latest data is available for training.</li>
-                <li><strong>Data Preprocessing:</strong> Images are resized to a consistent shape and augmented using transformations like random flips, rotations, and zooming.</li>
-                <li><strong>Integration:</strong> The dataset is integrated into the training pipeline, and the model is trained with the preprocessed data.</li>
+    <!-- VGG16 & Pre-trained Model Architecture -->
+    <section>
+        <h3>VGG16 Model and Pre-trained Architecture:</h3>
+        <p>
+            The VGG16 model is a convolutional neural network (CNN) consisting of 16 weight layers (13 convolutional layers and 3 fully connected layers). It was originally trained on the ImageNet dataset, which contains millions of labeled images.
+        </p>
+        <p>
+            In this project, we leverage the pre-trained VGG16 model as a feature extractor. The lower layers of the model are frozen, retaining their ability to extract important features, while the upper layers are replaced with a new classification head tailored for poultry disease detection.
+        </p>
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='images/vgg16.png') }}" alt="VGG16 Model Architecture">
+        </div>
+    </section>
+
+    <!-- Transfer Learning Approach -->
+    <section>
+        <h3>Transfer Learning Approach:</h3>
+        <p>
+            **What is Transfer Learning?**  
+            Transfer learning is a machine learning technique where a pre-trained model, originally trained on a large dataset (such as ImageNet), is fine-tuned for a different but related task. Instead of training from scratch, we reuse learned features, which accelerates training and improves performance, especially with limited labeled data.
+        </p>
+        <p>
+            **Why is Transfer Learning Beneficial?**
+            <ul>
+                <li>**Faster Training**: Instead of learning features from scratch, the model only fine-tunes high-level layers, significantly reducing training time.</li>
+                <li>**Better Performance with Limited Data**: Since the pre-trained model has already learned general features (edges, shapes, textures), it performs well even with fewer training images.</li>
+                <li>**Avoids Overfitting**: Using a pre-trained model prevents overfitting, especially in domains with limited labeled data.</li>
             </ul>
+        </p>
+        <p>
+            **How We Used Transfer Learning in This Project**  
+            In this project, the VGG16 model is used as a feature extractor. The initial convolutional layers are frozen, meaning their weights are not updated during training. A new classifier is added on top of VGG16, trained specifically for poultry disease classification. Only the newly added layers are updated during training.
+        </p>
+        <div class="image-container">
+            <img src="{{ url_for('static', filename='images/model_architecture.png') }}" alt="Custom Model Architecture">
         </div>
+    </section>
 
-        <!-- Low-Level Design (LLD) -->
-        <div class="mt-4">
-            <h3 class="section-title">Low-Level Design (LLD)</h3>
-            <p class="section-content">
-                The Low-Level Design focuses on the implementation details and architecture of the model.
-            </p>
-            <ul class="section-content">
-                <li><strong>Data Preprocessing:</strong> Images are resized to a consistent shape (224x224x3) and augmented using random transformations like rotations, flips, and zooming.</li>
-                <li><strong>VGG16 Model Architecture:</strong> The base VGG16 model, pre-trained on ImageNet, is modified by replacing its top layers to make it suitable for poultry disease classification.</li>
-                <li><strong>Transfer Learning:</strong> The pre-trained weights from ImageNet are used to initialize the model, and only the last few layers are trained on the poultry dataset.</li>
-                <li><strong>Training Process:</strong> The model is trained for 10 epochs, using batch size 32. Both training and validation loss/accuracy are tracked to monitor performance.</li>
-                <li><strong>Prediction Pipeline:</strong> Once trained, the model is deployed for inference. The `predict()` method processes incoming images and classifies them into disease categories.</li>
-            </ul>
-        </div>
+    <!-- Training Files & Logs Section -->
+    <section>
+        <h3>Training Files and Logs:</h3>
+        <p>
+            The training logs are saved, providing detailed information about the training process. You can download the trained model from the link below:
+        </p>
+        <ul>
+            <li><a href="{{ url_for('static', filename='models/model.keras') }}" download>Download Trained Model</a></li>
+        </ul>
+    </section>
+    
+</div>
 
-        <!-- Pre-trained VGG16 Model -->
-        <div class="mt-4">
-            <h3 class="section-title">Pre-trained VGG16 Model</h3>
-            <p class="section-content">
-                VGG16 is a convolutional neural network model trained on the ImageNet dataset with 16 layers. It is a proven architecture for image classification tasks.
-            </p>
-            <ul class="section-content">
-                <li><strong>Architecture:</strong> The VGG16 model consists of 13 convolutional layers followed by 3 fully connected layers. It uses small receptive fields (3x3 convolutions) and max-pooling layers.</li>
-                <li><strong>Pre-training:</strong> The model has already been trained on ImageNet, a large and diverse dataset containing over a million images of 1000 categories.</li>
-                <li><strong>Why VGG16?</strong> VGG16 has been shown to perform well on various image classification tasks due to its simple yet effective design.</li>
-                <li><strong>VGG16 Architecture:</strong> The VGG16 network has a total of 16 layers. Below is an illustration of the architecture.</li>
-            </ul>
-            <h4>VGG16 Architecture Diagram:</h4>
-            <img src="{{ url_for('static', filename='vgg16_architecture.png') }}" alt="VGG16 Architecture" class="img-fluid">
-        </div>
+<!-- Bootstrap JS and jQuery -->
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
 
-        <!-- Transfer Learning Approach -->
-        <div class="mt-4">
-            <h3 class="section-title">Transfer Learning Approach</h3>
-            <p class="section-content">
-                Transfer learning allows us to leverage a pre-trained model for a different, but related task. Instead of training a model from scratch, we can fine-tune a pre-trained model like VGG16 on our specific poultry disease dataset.
-            </p>
-            <ul class="section-content">
-                <li><strong>Pre-training:</strong> The base model (VGG16) is pre-trained on ImageNet to learn general features of images.</li>
-                <li><strong>Fine-tuning:</strong> The top layers of the VGG16 model are replaced with layers specific to the poultry disease classification task. The weights from ImageNet are used to initialize the network, while only the final layers are trained on the poultry dataset.</li>
-                <li><strong>Benefits:</strong> Transfer learning significantly reduces training time and improves performance, especially when there is a limited dataset.</li>
-            </ul>
-        </div>
-
-        <!-- Model Architecture -->
-        <div class="mt-4">
-            <h3 class="section-title">Model Architecture</h3>
-            <img src="{{ url_for('static', filename='model_architecture.png') }}" alt="Model Architecture" class="img-fluid">
-        </div>
-    </div>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
