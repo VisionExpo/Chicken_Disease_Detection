@@ -63,13 +63,13 @@ Using VGG16's pre-trained weights on ImageNet helps the model learn essential fe
 ```
 +---------------------+
 |      Input Layer    |
-|      (224x224x3)    |
+|      (224x224x3)   |
 +---------------------+
           |
           v
 +---------------------+
 |      VGG16          |
-|  (Base Model)       |
+|  (Base Model)      |
 |                     |
 |  Conv1: 64 Filters  |
 |  Conv2: 64 Filters  |
@@ -87,21 +87,21 @@ Using VGG16's pre-trained weights on ImageNet helps the model learn essential fe
           v
 +---------------------+
 |  Fully Connected    |
-|        (Dense1)     |
+|        (Dense1)    |
 |      4096 Neurons   |
 +---------------------+
           |
           v
 +---------------------+
 |  Fully Connected    |
-|        (Dense2)     |
+|        (Dense2)    |
 |      4096 Neurons   |
 +---------------------+
           |
           v
 +---------------------+
 |     Output Layer    |
-|      (Softmax)      |
+|      (Softmax)     |
 |      4 Classes      |
 +---------------------+
 
@@ -114,17 +114,26 @@ Using VGG16's pre-trained weights on ImageNet helps the model learn essential fe
 
 ### Test Accuracy
 - **Accuracy**: 85.60%
+- **Validation Accuracy**: {{ history_data['val_accuracy'][-1] }}
 - **Loss**: 0.3822
+- **Validation Loss**: {{ history_data['val_loss'][-1] }}
 - **Precision**: [Insert Precision Here]
 - **Recall**: [Insert Recall Here]
 - **F1 Score**: [Insert F1 Score Here]
 
-### High-Level Design (HLD)
+### Graphs
+- **Accuracy vs Validation Accuracy**: 
+  ![Accuracy vs Validation Accuracy](static/graphs/accuracy_vs_val_accuracy.png)
+  
+- **Loss vs Validation Loss**: 
+  ![Loss vs Validation Loss](static/graphs/loss_vs_val_loss.png)
+
+## High-Level Design (HLD)
 
 ### System Architecture Overview
 ```
 +-------------------+
-|   User Interface  |
+|   User Interface   |
 |   (Flask App)     |
 +-------------------+
           |
@@ -145,7 +154,7 @@ Using VGG16's pre-trained weights on ImageNet helps the model learn essential fe
           |
           v
 +-------------------+
-|   Model Evaluation|
+|   Model Evaluation |
 +-------------------+
 ```
 
@@ -240,17 +249,17 @@ Using VGG16's pre-trained weights on ImageNet helps the model learn essential fe
           |
           v
 +-------------------+
-| Model Preparation |
+| Model Preparation  |
 +-------------------+
           |
           v
 +-------------------+
-|   Model Training  |
+|   Model Training   |
 +-------------------+
           |
           v
 +-------------------+
-| Model Evaluation  |
+| Model Evaluation   |
 +-------------------+
 ```
 

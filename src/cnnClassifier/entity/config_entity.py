@@ -39,6 +39,13 @@ class TrainingConfig:
     params_batch_size: int
     params_is_augmentation: bool
     params_image_size: list
+    params_learning_rate: float  # Add this line
+    lr_scheduler_factor: float    # Add this line
+    lr_scheduler_patience: int     # Add this line
+    lr_scheduler_min_lr: float     # Add this line
+
+    params_learning_rate: float  # Add this line
+
 
 
 @dataclass(frozen=True)

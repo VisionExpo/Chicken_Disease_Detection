@@ -44,11 +44,13 @@
         <h3>Training History:</h3>
         <div class="graph-container">
             <h5>Accuracy vs Validation Accuracy:</h5>
-            <img src="{{ url_for('static', filename='graphs/accuracy_vs_val_accuracy.png') }}" alt="Accuracy vs Validation Accuracy">
+<img src="{{ url_for('static', filename='accuracy_vs_val_accuracy.png') }}" alt="Accuracy vs Validation Accuracy">
+
         </div>
         <div class="graph-container">
             <h5>Loss vs Validation Loss:</h5>
-            <img src="{{ url_for('static', filename='graphs/loss_vs_val_loss.png') }}" alt="Loss vs Validation Loss">
+<img src="{{ url_for('static', filename='loss_vs_val_loss.png') }}" alt="Loss vs Validation Loss">
+
         </div>
     </section>
     
@@ -65,7 +67,8 @@
             </ul>
         </p>
         <div class="image-container">
-            <img src="{{ url_for('static', filename='images/hld.png') }}" alt="High-Level Design">
+<img src="{{ url_for('static', filename='hld.png') }}" alt="High-Level Design">
+
         </div>
     </section>
     
@@ -96,7 +99,8 @@
             In this project, we leverage the pre-trained VGG16 model as a feature extractor. The lower layers of the model are frozen, retaining their ability to extract important features, while the upper layers are replaced with a new classification head tailored for poultry disease detection.
         </p>
         <div class="image-container">
-            <img src="{{ url_for('static', filename='images/vgg16.png') }}" alt="VGG16 Model Architecture">
+<img src="{{ url_for('static', filename='vgg16_architecture.png') }}" alt="VGG16 Model Architecture">
+
         </div>
     </section>
 
@@ -120,7 +124,8 @@
             In this project, the VGG16 model is used as a feature extractor. The initial convolutional layers are frozen, meaning their weights are not updated during training. A new classifier is added on top of VGG16, trained specifically for poultry disease classification. Only the newly added layers are updated during training.
         </p>
         <div class="image-container">
-            <img src="{{ url_for('static', filename='images/model_architecture.png') }}" alt="Custom Model Architecture">
+<img src="{{ url_for('static', filename='model_architecture.jpeg') }}" alt="Custom Model Architecture">
+
         </div>
     </section>
 

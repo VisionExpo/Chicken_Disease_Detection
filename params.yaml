@@ -1,8 +1,18 @@
 AUGMENTATION: True
 IMAGE_SIZE: [224, 224, 3] # as per VGG 16 model
-BATCH_SIZE: 32
+BATCH_SIZE: 16
 INCLUDE_TOP: False
-EPOCHS: 10
+EPOCHS: 9
+
 CLASSES: 4
 WEIGHTS: imagenet
-LEARNING_RATE: 0.01
+LEARNING_RATE: 0.0001
+
+# Learning Rate Scheduler Configuration
+EARLY_STOPPING:
+  PATIENCE: 2  # Number of epochs with no improvement after which training will stop
+
+LR_SCHEDULER:
+  FACTOR: 0.5      # Factor by which to reduce learning rate
+  PATIENCE: 3      # Number of epochs with no improvement after which LR will be reduced
+  MIN_LR: 0.000001 # Minimum learning rate
