@@ -12,13 +12,11 @@ The objectives of this project are:
 - **Cloud Deployment**: Deploy the trained model on cloud services (Render, AWS, or Azure) for scalability and real-time access.
 
 ## Model Architecture
-The model for poultry disease detection leverages **VGG16**, a pre-trained deep learning model. The architecture consists of:
+![VGG16 Architecture](static/vgg16_architecture.png)
 
 ### 1. Base Model (VGG16)
    - A 16-layer deep CNN architecture originally trained on the ImageNet dataset.
    - The VGG16 model is used for feature extraction, detecting basic patterns like edges, textures, and shapes, which are essential for detecting poultry diseases.
-
-![VGG16 Architecture](static/vgg16_architecture.png)
 
 ### 2. Custom Layers
    - After VGG16, custom fully connected layers and a softmax output layer are added to adapt the model to the poultry disease classification task.
@@ -36,6 +34,7 @@ The model for poultry disease detection leverages **VGG16**, a pre-trained deep 
   - Learning Rate: 0.0001
   - Using ImageNet weights
   - Data augmentation enabled
+
 
 ### Layers:
 - **Convolutional Layers**: 13 convolutional layers that extract features from images.
