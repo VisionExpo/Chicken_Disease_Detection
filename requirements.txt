@@ -1,3 +1,4 @@
+﻿﻿Flask==3.1.0
 Flask-Cors==5.0.0
 tensorflow==2.13.1
 joblib==1.1.0
