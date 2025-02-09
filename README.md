@@ -74,7 +74,7 @@ Using VGG16's pre-trained weights on ImageNet helps the model learn essential fe
 
 ## High-Level Design (HLD)
 ### System Architecture Overview
-![hld](static/hld.png)
+![HLD](static/HLD.png)
 
 ### Major Components and their Interactions
 - **User Interface**: Interacts with users and sends requests to the API.
@@ -95,7 +95,7 @@ Using VGG16's pre-trained weights on ImageNet helps the model learn essential fe
 
 ## Low-Level Design (LLD)
 ### Detailed Component Architecture
-![lld](static/lld.png)
+![LLD](static/LLD.png)
 
 ### Data Structures
 - **DataIngestionConfig**: Configuration for data ingestion, including:
