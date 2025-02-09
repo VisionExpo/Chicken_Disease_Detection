@@ -7,6 +7,9 @@ services:
     plan: free
     buildCommand: "pip install -r requirements.txt"
     startCommand: "python app.py"
+    autoDeploy: true
     envVars:
       - key: FLASK_ENV
         value: production
+      - key: PYTHONVERSION
+        value: 3.10.12
