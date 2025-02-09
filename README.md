@@ -52,7 +52,7 @@ VGG16 is a well-known architecture in the deep learning community, consisting of
 Using VGG16's pre-trained weights on ImageNet helps the model learn essential features quickly and efficiently. The model is fine-tuned using our poultry disease dataset, ensuring it specializes in poultry disease classification.
 
 ### Transfer Learning Approach
-![Model Architecture](static\model_architecture.jpeg)
+![Model Architecture](static/model_architecture.jpeg)
 
    - **Feature Extraction**: VGG16 is used as a feature extractor, leveraging its ability to detect fundamental image features (like edges and textures).
    - **Fine-Tuning**: The top layers of the VGG16 model are replaced with custom layers to tailor the model for poultry disease classification.
@@ -74,7 +74,7 @@ Using VGG16's pre-trained weights on ImageNet helps the model learn essential fe
 
 ## High-Level Design (HLD)
 ### System Architecture Overview
-![High-Level Design](static\HLD.png)
+![High-Level Design](static/hld.png)
 
 ### Major Components and their Interactions
 - **User Interface**: Interacts with users and sends requests to the API.
@@ -95,7 +95,7 @@ Using VGG16's pre-trained weights on ImageNet helps the model learn essential fe
 
 ## Low-Level Design (LLD)
 ### Detailed Component Architecture
-![Low-Level Design](static\LLD.png)
+![Low-Level Design](static/lld.png)
 
 ### Data Structures
 - **DataIngestionConfig**: Configuration for data ingestion, including:
@@ -138,7 +138,7 @@ Using VGG16's pre-trained weights on ImageNet helps the model learn essential fe
 4. **View the Results**: Once the prediction is complete, the result will be displayed in the designated output area. You can also view the training history by clicking the "View Training History" button.
 
 ### Pipeline Workflows
-![Pipeline Workflow](static\pipeline_workflow.png)
+![Pipeline Workflow](static/pipeline_workflow.png)
 
 ### API Endpoints
 - **`/predict`**: 
@@ -166,7 +166,7 @@ Using VGG16's pre-trained weights on ImageNet helps the model learn essential fe
       "status": "running"
     }
     ```
-![API End-points](static\api_endpoints.png)
+![API End-points](static/api_endpoints.png)
 
 ## History Analysis
 ### Overview
