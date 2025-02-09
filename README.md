@@ -74,7 +74,7 @@ Using VGG16's pre-trained weights on ImageNet helps the model learn essential fe
 
 ## High-Level Design (HLD)
 ### System Architecture Overview
-![hld](https://raw.githubusercontent.com/VisionExpo/Chicken_Disease_Detection-main/main/static/hld.png)
+![hld](static/hld.png)
 
 ### Major Components and their Interactions
 - **User Interface**: Interacts with users and sends requests to the API.
@@ -95,7 +95,7 @@ Using VGG16's pre-trained weights on ImageNet helps the model learn essential fe
 
 ## Low-Level Design (LLD)
 ### Detailed Component Architecture
-![lld](https://raw.githubusercontent.com/VisionExpo/Chicken_Disease_Detection-main/main/static/lld.png)
+![lld](static/lld.png)
 
 ### Data Structures
 - **DataIngestionConfig**: Configuration for data ingestion, including:
