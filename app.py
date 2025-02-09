@@ -1,43 +1,76 @@
-from flask import Flask, request, jsonify, render_template
-from flask_cors import CORS, cross_origin
-from src.cnnClassifier.utils.common import decodeImage  # Ensure this is the correct import
-from src.cnnClassifier.pipeline.predict import PredictionPipeline
-from src.cnnClassifier.entity.config_entity import TrainingConfig
-from src.cnnClassifier.components.training import Training  # Ensure this is the correct import
+"""
+Chicken Disease Detection - Flask Web Application
 
-from pathlib import Path
+This module serves as the main entry point for the Chicken Disease Detection web application.
+It provides a REST API for disease prediction and a web interface for users to interact with
+the model. The application handles image uploads, makes predictions using a trained CNN model,
+and displays training history and model performance metrics.
+
+Main Components:
+- REST API endpoints for prediction
+- Web interface for image upload
+- Training history visualization
+- Model architecture display
+"""
+
+# Standard library imports
 import os
+import json
+from pathlib import Path
+
+# Third-party imports
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from tensorflow.keras.utils import plot_model
-import json
+from flask import Flask, request, jsonify, render_template
+from flask_cors import CORS, cross_origin
 
+# Local application imports
+from src.cnnClassifier.utils.common import decodeImage
+from src.cnnClassifier.pipeline.predict import PredictionPipeline
+from src.cnnClassifier.entity.config_entity import TrainingConfig
+from src.cnnClassifier.components.training import Training
+
+# Initialize Flask application
 app = Flask(__name__)
 CORS(app)
 
 class ClientApp:
+    """
+    Client application class that handles image processing and prediction.
+    
+    Attributes:
+        filename (str): Name of the input image file
+        classifier (PredictionPipeline): Instance of the prediction pipeline
+    """
     def __init__(self):
         self.filename = "inputImage.jpg"
         self.classifier = PredictionPipeline(self.filename)
 
+# Web Interface Routes
 @app.route("/", methods=['GET'])
 @cross_origin()
 def home():
+    """Render the main page of the application."""
     return render_template('index.html')
 
+# API Endpoints
 @app.route("/predict", methods=['POST'])
 @cross_origin()
 def predictRoute():
+    """
+    Handle image prediction requests.
+    
+    Expects a JSON payload with base64 encoded image data.
+    Returns the prediction result or error message.
+    """
     if 'image' not in request.json:
         return jsonify({"error": "No image provided"}), 400
     
     image = request.json['image']
     
     try:
-        # Decode image and save it
         decodeImage(image, clApp.filename)
-        
-        # Run prediction on the decoded image
         result = clApp.classifier.predict()
         
         if 'error' in result:
@@ -50,10 +83,16 @@ def predictRoute():
 
 @app.route('/history', methods=['GET'])
 def get_training_history():
+    """
+    Display model training history and performance metrics.
+    
+    Generates or loads training history data and creates visualizations
+    of model performance metrics including accuracy and loss curves.
+    """
     history_path = os.path.join('static', 'history.json')
     
     if not os.path.exists(history_path):
-        # Initialize the config with the correct paths and parameters
+        # Initialize training configuration
         config = TrainingConfig(
             root_dir=Path('artifacts/training'),
             trained_model_path=Path('artifacts/training/model.keras'),
@@ -65,20 +104,16 @@ def get_training_history():
             params_image_size=[224, 224, 3]
         )
 
-        # Initialize the Training class with the config object
+        # Train model and generate performance metrics
         training_instance = Training(config)
-
-        # Set up the data generators
         training_instance.train_valid_generator()
-
-        # Start the training process and get the history
         history_data = training_instance.train(callback_list=[])
 
-        # Save the training history as a JSON file
+        # Save training history
         with open(history_path, 'w') as f:
             json.dump(history_data, f, indent=4)
 
-        # Plot training accuracy and loss as static images
+        # Generate accuracy plot
         plt.figure(figsize=(10, 5))
         plt.plot(history_data['epochs'], history_data['accuracy'], label='Training Accuracy')
         plt.plot(history_data['epochs'], history_data['val_accuracy'], label='Validation Accuracy')
@@ -88,6 +123,7 @@ def get_training_history():
         plt.title('Model Accuracy')
         plt.savefig(os.path.join('static', 'training_accuracy.png'))
 
+        # Generate loss plot
         plt.figure(figsize=(10, 5))
         plt.plot(history_data['epochs'], history_data['loss'], label='Training Loss')
         plt.plot(history_data['epochs'], history_data['val_loss'], label='Validation Loss')
@@ -98,17 +134,19 @@ def get_training_history():
         plt.savefig(os.path.join('static', 'training_loss.png'))
         plt.close()
 
-        # Save model architecture as a static image
-        plot_model(training_instance.model, to_file=os.path.join('static', 'model_architecture.png'), show_shapes=True, show_layer_names=True)
-
+        # Generate model architecture visualization
+        plot_model(training_instance.model, 
+                  to_file=os.path.join('static', 'model_architecture.png'),
+                  show_shapes=True,
+                  show_layer_names=True)
     else:
-        # Load existing history data from the file
+        # Load existing history data
         with open(history_path, 'r') as f:
             history_data = json.load(f)
 
-    # Return the history data as JSON and render the template with the history data
     return render_template('history.html', history_data=history_data)
 
 if __name__ == "__main__":
+    # Initialize client application and start server
     clApp = ClientApp()
     app.run(host='0.0.0.0', port=int(os.environ.get("PORT", 8080)))
